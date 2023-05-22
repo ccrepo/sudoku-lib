@@ -1,0 +1,3 @@
+#!/bin/bash
+
+while [[ true ]] ; do   more t.log | awk '{ print $7}' | sort | uniq -c; sleep 1; echo "" ; done

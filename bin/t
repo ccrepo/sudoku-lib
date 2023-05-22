@@ -1,0 +1,4 @@
+#!/bin/bash
+. ./env
+
+while [[ true ]]; do (sudokuTest) ; ( echo "`date` $?" >> ./t.log) ; sleep 1; done

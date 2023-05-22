@@ -1,0 +1,4 @@
+#!/bin/bash
+. ./env
+
+clear ; ( ./c 2>&1 ) | more

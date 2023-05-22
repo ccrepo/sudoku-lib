@@ -1,0 +1,11 @@
+#!/bin/bash
+. ./env
+
+cd ../sudoku/src/test/src/java/
+
+javac sudoku_jlib.java
+javac sudoku_jlibJNI.java
+javac sudoku_libclient_moves.java
+
+java -Djava.library.path=$LIBRARYPATH sudoku_libclient_moves
+

@@ -1,0 +1,21 @@
+#!/bin/bash
+clear
+
+if [[ "$OSTYPE" =~ ^darwin ]]
+then
+  echo 'running on macOS (darwin)'
+  export JAVA_HOME='/System/Volumes/Data/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home'
+  export CLASSPATH=".:$CLASSPATH"
+  export LIBRARYPATH="../../../../build/lib/main/debug/macos/"
+  export PATH="../sudoku/build/install/test/macos/lib:$PATH"
+elif [[ "$OSTYPE" =~ ^linux ]]
+then
+  echo 'running on linux'
+  export JAVA_HOME='/usr/lib/jvm/java-19-openjdk-amd64/'
+  export CLASSPATH=".:$CLASSPATH"
+  export LIBRARYPATH="../../../../build/lib/main/debug/linux/"
+  export PATH="../sudoku/build/install/test/linux/lib:$PATH"
+else
+  echo "OS not supported OSTYPE is '$OSTYPE'"
+  exit 1
+fi
