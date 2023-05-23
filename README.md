@@ -34,10 +34,10 @@ We would only need to keep the fastest sub-result, as we only need one sub-Game 
     
     It returns the solutions moves and the final solved board to the caller. 
     
-    If no solution is found it only returns an error code.
+    If no solution is found it only returns an error message.
 
     ```cpp
-    unsigned int get_sudoku_solution_STUB(
+    unsigned int32_t get_sudoku_solution_STUB(
 			const char* in_request,
 			uint8_t* out_response,
 			int32_t* out_runtime);
@@ -50,7 +50,7 @@ We would only need to keep the fastest sub-result, as we only need one sub-Game 
     It then returns a list of these moves to the caller. 
 
     ```cpp
-    unsigned int get_sudoku_possible_moves_STUB(
+    unsigned int32_t get_sudoku_possible_moves_STUB(
 			const char* in_request,
 			uint8_t* out_response,
 			int32_t out_runtime);
