@@ -38,22 +38,22 @@ We would only need to keep the fastest sub-result, as we only need one sub-Game 
 
     ```cpp
     unsigned int get_sudoku_solution_STUB(
-			const char* request,
-			uint8_t* response,
-			int32_t* runtime);
+			const char* in_request,
+			uint8_t* out_response,
+			int32_t* out_runtime);
     ```
 
-2. get_sudoku_moves_STUB
+2. get_sudoku_possible_moves_STUB
 
-    Method: get_moves_STUB finds all possible valid next moves for a given sudoku position. 
+    Method: get_sudoku_possible_moves_STUB finds all possible valid next moves for a given sudoku position. 
     
     It then returns a list of these moves to the caller. 
 
     ```cpp
-    unsigned int get_sudoku_moves_STUB(
-			const char* request,
-			uint8_t* response,
-			int32_t runtime);
+    unsigned int get_sudoku_possible_moves_STUB(
+			const char* in_request,
+			uint8_t* out_response,
+			int32_t out_runtime);
     ```
     
 ## Usage
@@ -97,10 +97,10 @@ We would only need to keep the fastest sub-result, as we only need one sub-Game 
     projectDir/bin/b:  run script 'c' with pagination.
     projectDir/bin/jm: test get_sudoku_moves_STUB via java example code.
     projectDir/bin/js: test get_sudoku_solution_STUB via java example code.
-    projectDir/bin/r:  re-run tests.
+    projectDir/bin/m:  part logfile from script 't' and summarise return code counts.
+    projectDir/bin/r:  run tests.
     projectDir/bin/s:  run SWIG JNI layer generation. only on linux.
     projectDir/bin/t:  run c++ tests in endless loop and log return codes.
-    projectDir/bin/m:  part logfile from script 't' and summarise return code counts.
     ```
 
 4. Development:
