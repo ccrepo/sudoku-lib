@@ -10,8 +10,20 @@ then
   export PATH="../sudoku/build/install/test/macos/lib:$PATH"
 elif [[ "$OSTYPE" =~ ^linux ]]
 then
+
   echo 'running on linux'
-  export JAVA_HOME='/usr/lib/jvm/java-19-openjdk-amd64/'
+  if [[ $(uname -m)  == 'aarch64' ]]
+  then
+    echo "cannot build on aarch64 platform"
+    exit 1
+  elif [[ $(uname -m)  == 'x86_64' ]]
+  then
+    export JAVA_HOME='/usr/lib/jvm/java-19-openjdk-amd64/'
+  else
+    echo "cannot build on this platform"
+    exit 1
+  fi
+  
   export CLASSPATH=".:$CLASSPATH"
   export LIBRARYPATH="../../../../build/lib/main/debug/linux/"
   export PATH="../sudoku/build/install/test/linux/lib:$PATH"
