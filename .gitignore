@@ -1,0 +1,37 @@
+.gradle
+/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# gradle/wrapper/gradle-wrapper.properties
+
+# Ignore Gradle build output directory
+build
+
+# emacs 
+*~
+
+#java
+java*hprof
+*.class
+hs_err_pid*.log
+
+#vi
+.gitignore.swp
+
+#bin
+bin/*.txt
+bin/*.log
+
+# editors
+*~
+\#*\#
+
