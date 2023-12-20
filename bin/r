@@ -1,0 +1,11 @@
+#!/bin/bash
+
+. ./env
+
+clear
+
+cd ..
+
+pwd   
+
+./gradlew -PSUDOKU_FULLTEST=off --rerun-tasks runTest

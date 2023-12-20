@@ -1,0 +1,52 @@
+#!/bin/bash
+
+clear
+
+if [[ "$OSTYPE" =~ ^darwin ]]
+then
+
+  echo "OS '$OSTYPE' not supported"
+  exit 1
+
+elif [[ "$OSTYPE" =~ ^linux ]]
+then    
+
+  echo 'linux build'
+
+  if [[ $(uname -m)  == 'aarch64' ]]
+  then
+    echo "cannot build on aarch64 platform"
+    exit 1
+  elif [[ $(uname -m)  == 'x86_64' ]]
+  then
+    echo "x86_64 build"
+  else
+    echo "OS '$OSTYPE $(`uname -m`)' not supported"
+    exit 1
+  fi
+  
+  export CLASSPATH=".:$CLASSPATH"
+  export SUDOKU_SWIG_BUILD_CONSTRAINTS='-source 19 -target 19'
+
+  SUDOKU_JAVA_HOME=`(java -XshowSettings:properties -version 2>&1)  | grep 'java.home' | cut -d'=' -f2 | awk '{ print $1}'`
+  echo "SUDOKU_JAVA_HOME = $SUDOKU_JAVA_HOME"
+
+  for i in java javac javap
+  do      
+    if [[ ! -f "${SUDOKU_JAVA_HOME}/bin/${i}" ]]
+    then
+      echo "could not set JAVA_HONE as '$SUDOKU_JAVA_HOME/bin/java' java is missing"
+      exit 1
+    fi
+  done
+
+  export JAVA_HOME="$SUDOKU_JAVA_HOME"
+  echo "JAVA_HOME = '$JAVA_HOME'"
+
+  export LD_LIBRARY_PATH="`pwd`/../sudoku/build/lib/main/debug/linux"
+  echo "LD_LIBRARY_PATH = '$LD_LIBRARY_PATH'"
+  
+else    
+  echo "OS '$OSTYPE' not supported"
+  exit 1
+fi

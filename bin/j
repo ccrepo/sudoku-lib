@@ -1,0 +1,29 @@
+#!/bin/bash
+
+. ./env
+
+cd ../sudoku/src/test/src/java/
+
+javac sudoku_jlib.java $SUDOKU_SWIG_BUILD_CONSTRAINTS
+javac sudoku_jlibJNI.java $SUDOKU_SWIG_BUILD_CONSTRAINTS
+
+javac sudoku_libclient_moves.java $SUDOKU_SWIG_BUILD_CONSTRAINTS
+javac sudoku_libclient_solution.java $SUDOKU_SWIG_BUILD_CONSTRAINTS
+
+java -Djava.library.path="$LD_LIBRARY_PATH" sudoku_libclient_solution 
+
+if [[ "$?" -ne "0" ]]
+then 
+  echo "sudoku libclient solution failed"
+  exit 1
+fi
+
+java -Djava.library.path="$LD_LIBRARY_PATH" sudoku_libclient_moves 
+
+if [[ "$?" -ne "0" ]]
+then 
+  echo "sudoku libclient moves failed"
+  exit 1
+fi
+
+exit 0
