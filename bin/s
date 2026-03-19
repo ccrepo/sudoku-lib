@@ -1,0 +1,7 @@
+#!/bin/bash
+. ./env
+
+if [[ "$OSTYPE" =~ ^linux ]]
+then
+  swig -java -c++ -cppext cpp -o ../sudoku/src/main/src/api/sudoku_api_wrap.cpp -outdir ../sudoku/src/test/src/java -module sudoku_jlib ../sudoku/src/main/include/api/sudoku_api.i 
+fi

@@ -1,0 +1,115 @@
+
+plugins {
+  id 'cpp-library'
+  id 'cpp-unit-test'
+}
+
+project.plugins.each {
+  //println it
+}
+
+library {  
+  source.from file('src/main/src') 
+  publicHeaders.from file('src/main/include/api')
+  privateHeaders.from file('src/main/src/api')
+  privateHeaders.from file('src/main/src/lib')
+  privateHeaders.from file('src/main/src/util')
+  privateHeaders.from file('src/main/src/sudoku')
+
+  def java_location = System.getenv("JAVA_HOME")
+  
+  if (!(java_location)) {
+    println 'JAVA_HOME must be set for generation and compilation of swig jni interface files. $JAVA_HOME/include/../jni.h location required'
+    throw new StopActionException('fatal error!! set JAVA_HOME enviroment variable before running build !')
+  } 
+  
+  privateHeaders.from file(java_location + '/include')
+  privateHeaders.from file(java_location + '/include/linux')
+  privateHeaders.from file(java_location + '/include/darwin')
+    
+  targetMachines = [
+    machines.linux.x86_64,
+    machines.macOS.x86_64
+  ]
+}
+
+unitTest {
+  source.from file('src/test/src/common')
+  source.from file('src/test/src/lib')
+  privateHeaders.from file('src/main/include/api')
+  privateHeaders.from file('src/test/src/common')
+  privateHeaders.from file('src/main/src/util')
+  privateHeaders.from file('src/main/src/sudoku')
+    
+  targetMachines = [
+    machines.linux.x86_64,
+    machines.macOS.x86_64
+  ]    
+}
+
+tasks.withType(CppCompile).configureEach {
+  compilerArgs.add '-fPIC'
+  compilerArgs.add '-Wall'
+  compilerArgs.add '-std=c++2a'
+  compilerArgs.add '-pthread'
+  compilerArgs.add '-Werror'
+  compilerArgs.add '-Wextra'
+  compilerArgs.add '-Wno-long-long'
+
+  //compilerArgs.add '-H'
+
+  //if (project.hasProperty('SUDOKU_TEST')) {
+  //  if (project.property('SUDOKU_TEST') == 'on') {
+  //    macros.put("SUDOKU_TEST", null)
+  //  }
+  //}
+}
+
+tasks.withType(LinkExecutable).configureEach {
+  linkerArgs.add '-v'
+  linkerArgs.add '-Werror' 
+  linkerArgs.add '-pthread'
+}
+
+tasks.withType(RunTestExecutable).configureEach {
+}
+
+tasks.register('showCompilerOptions') {
+  doLast {
+    println '\n-----------------------------------------------------\n'
+    println 'Compiler options:'
+    FileTree tree = fileTree('build').include('**/options.txt')
+    // Iterate over the contents of a tree
+    tree.each {File file ->
+      println 'Content of file ' + file + ':\n'
+      println file.text
+      println '------\n'
+    }
+  }
+}
+
+tasks.register('showCompilerOutput') {
+  dependsOn showCompilerOptions
+  doLast {
+    println '\n-----------------------------------------------------\n'
+    println 'Compiler output:'
+    FileTree tree = fileTree('build').include('**/output.txt')
+    // Iterate over the contents of a tree
+    tree.each {File file ->
+      println 'Content of file ' + file + ':\n'
+      println file.text
+      println '------\n'
+    }
+  }
+}
+
+tasks.withType(InstallExecutable) {
+  //finalizedBy showCompilerOutput
+}
+
+tasks.withType(RunTestExecutable) {
+}
+
+tasks.withType(RunTestExecutable).configureEach {
+  enabled = false
+}
