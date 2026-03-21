@@ -44,15 +44,15 @@ protected:
 template<typename T>
 class LoggerT final : private Logger {
 
-//  using value_type [[maybe_unused]] = typename std::enable_if<
-//      std::is_same<Fatal, T>::value ||
-//      std::is_same<Error, T>::value ||
-//      std::is_same<Warn,  T>::value ||
-//      std::is_same<Info,  T>::value ||
-//      std::is_same<Debug, T>::value ||
-//      std::is_same<Trace, T>::value ||
-//      std::is_same<All,   T>::value ||
-//      std::is_same<Dev,   T>::value>::type;
+  using value_type [[maybe_unused]] = typename std::enable_if<
+    std::is_same<Fatal, T>::value ||
+    std::is_same<Error, T>::value ||
+    std::is_same<Warn,  T>::value ||
+    std::is_same<Info,  T>::value ||
+    std::is_same<Debug, T>::value ||
+    std::is_same<Trace, T>::value ||
+    std::is_same<All,   T>::value ||
+    std::is_same<Dev,   T>::value>::type;
 
 public:
   LoggerT() :
